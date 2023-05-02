@@ -10,9 +10,10 @@
       <!-- v-for 구문은 템플릿 내부에 루프를 포함시켜 배열의 각 항목에 대한 템플릿 기능의 렌더링을 반복할 수 있는 Vue내장 지시문. -->
       <!-- v-for 구문은 자바스크립트의 for...in 루프와 같은 역할을 한다. -->
       <!-- 반복하려는 요소에 연결하고 해당 요소와 그 자식을 렌더링함. -->
+      <!-- key는 id값으로. -->
       <li v-for="item in ToDoItems" :key="item.id">
         <!-- label prop에 value 값을 넣어준다. -->
-        <to-do-item :label="item.label" :done="true"></to-do-item>
+        <to-do-item :label="item.label" :done="true" :id="item.id"></to-do-item>
       </li>
     </ul>
   </div>
@@ -34,14 +35,17 @@ export default {
   },
   data() {
     return {
+      // v-for를 사용하여 렌더링에 사용할 수 있는 목업 데이터 TodoItems[]
+      // v-for를 사용할 때, 목록이 변경될 떄마다 다시 만들지 않도록 목록 요소를 패치하려고 시도함
+      // 이때 요소를 적절하게 재사용하고 있는지 확인하려면 연결하는 동일한 요소에 고유한 key필요함
       ToDoItems: [
         { id: uniqueId("todo-"), label: "Learn Vue", done: false },
         {
           id: uniqueId("todo-"),
           label: "Create a Vue project with the CLI",
-          done: true,
+          done: false,
         },
-        { id: uniqueId("todo-"), label: "Have fun", done: true },
+        { id: uniqueId("todo-"), label: "Have fun", done: false },
         { id: uniqueId("todo-"), label: "Create a to-do list", done: false },
       ],
     };
