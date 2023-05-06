@@ -2,7 +2,13 @@
   <div class="custom-checkbox">
     <!-- [v-bind] v-bind는 js표현식을 HTML요소 및 구성 요소에 바인딩하는 특수 구문임. -->
     <!-- v-bind:attribute="expression" 또는 :attribute="expression" -->
-    <input type="checkbox" id="todo-item" v-bind:checked="isDone" class="checkbox"/>
+    <input 
+    type="checkbox" 
+    id="todo-item" 
+    v-bind:checked="isDone" 
+    class="checkbox"
+    @change="$emit('checkbox-changed')"
+    />
     <!-- 여기서 {{}}는 vue의 특수 템플릿 구문, 값과 메서드를 포함하여 클래스에 정의된 js표현식의 결과를 템플릿 내부에 print할 수 있음. -->
     <!-- {{}} 내부의 컨텐츠는 HTML이 아닌 텍스트로 표시됨. 지금의 경우, label prop의 value를 print -->
     <label :for="id" class="checkbox-label">{{ label }}</label>

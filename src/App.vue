@@ -6,6 +6,7 @@
 <template>
   <div id="app">
     <h1>To-Do List</h1>
+    <h2 id="list-summary">{{ listSummary }}</h2>
     <to-do-form @todo-added="addToDo"></to-do-form>
     <ul aria-labelledby="list-summary" class="stack-large">
       <!-- v-for 구문은 템플릿 내부에 루프를 포함시켜 배열의 각 항목에 대한 템플릿 기능의 렌더링을 반복할 수 있는 Vue내장 지시문. -->
@@ -14,7 +15,7 @@
       <!-- key는 id값으로. -->
       <li v-for="item in ToDoItems" :key="item.id">
         <!-- label prop에 value 값을 넣어준다. -->
-        <to-do-item :label="item.label" :done="true" :id="item.id"></to-do-item>
+        <to-do-item :label="item.label" :done="false" :id="item.id" @checkbox-changed="updateDoneStatus(item.id)"></to-do-item>
       </li>
     </ul>
   </div>
@@ -60,6 +61,17 @@ export default {
     addToDo(toDoLabel) {
       this.ToDoItems.push({id:uniqueId('todo-'), label: toDoLabel, done: false})
       
+    },
+    updateDoneStatus(toDoId) {
+      // id가 일치하는 todo항목을 찾고 해당 상태를 현재 상태와 반대로 업데이트
+      const toDoToUpdate = this.ToDoItems.find((item) => item.id === toDoId)
+      toDoToUpdate.done = !toDoToUpdate.done
+   }
+  },
+  computed: {
+    listSummary() {
+      const numberFinishedItems = this.ToDoItems.filter((item) => item.done).length
+      return `${numberFinishedItems} out of ${this.ToDoItems.length} items completed`
     }
   }
 };

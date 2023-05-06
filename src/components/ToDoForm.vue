@@ -27,6 +27,7 @@ export default {
             if (this.label === "") {
                 return;
             }
+            // [$emit]는 부모컴포넌트로 변경값을 보낸다. 
             this.$emit("todo-added", this.label)
             this.label = ""
         },
