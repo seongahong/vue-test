@@ -1,11 +1,12 @@
 <!-- Vue 애플리케이션의 최상위 컴포넌트. -->
 
 <!-- 1. 컴포넌트 템플릿을 정의하는 파트 -->
-<!-- 컴포넌트의 모든 마크업 구조와 디스플레이 로직을 포함함. -->
-<!-- HTML구문, 일부 Vue에 특화된 구문도 포함할 수 있음. -->
+<!-- 1.1. 컴포넌트의 모든 마크업 구조와 디스플레이 로직을 포함함. -->
+<!-- 1.2. HTML구문, 일부 Vue에 특화된 구문도 포함할 수 있음. -->
 <template>
   <div id="app">
     <h1>To-Do List</h1>
+    <to-do-form @todo-added="addToDo"></to-do-form>
     <ul>
       <!-- v-for 구문은 템플릿 내부에 루프를 포함시켜 배열의 각 항목에 대한 템플릿 기능의 렌더링을 반복할 수 있는 Vue내장 지시문. -->
       <!-- v-for 구문은 자바스크립트의 for...in 루프와 같은 역할을 한다. -->
@@ -20,18 +21,23 @@
 </template>
 
 <!-- 2. script를 작성하는 파트 -->
-<!-- 컴포넌트 화면에 표시되지 않는 모든 로직을 포함함. -->
-<!-- export 되는 js 오브젝트가 있어야함. -->
-<!-- 이 오브젝트에서 로컬 컴포넌트 등록, 컴포넌트 인풋(props)정의, 로컬 상태관리, 메서드 정의 등 작업이 이루어짐 -->
-<!-- 빌드 단계에서 이 오브젝트가 처리되고, 템플릿과 함께 render() 함수를 통해 vue 컴포넌트로 변환됨 -->
+<!-- 2.1. 컴포넌트 화면에 표시되지 않는 모든 로직을 포함함. -->
+<!-- 2.2. export 되는 js 오브젝트가 있어야함. -->
+<!-- 2.3. 이 오브젝트에서 로컬 컴포넌트 등록, 컴포넌트 인풋(props)정의, 로컬 상태관리, 메서드 정의 등 작업이 이루어짐 -->
+<!-- 2.4. 빌드 단계에서 이 오브젝트가 처리되고, 템플릿과 함께 render() 함수를 통해 vue 컴포넌트로 변환됨 -->
 <script>
 import ToDoItem from "./components/ToDoItem.vue";
 import uniqueId from "lodash.uniqueid";
+import ToDoForm from "./components/ToDoForm.vue";
 
 export default {
   name: "app",
   components: {
     ToDoItem,
+    // The "ToDoForm" component has been registered but not used.
+    // 위와 같은 에러는 컴포넌트를 import해왔지만 사용되지 않았을 때 생긴다.
+    // 따라서 위의 tamplete 내부에서 사용한다. 
+    ToDoForm
   },
   data() {
     return {
@@ -50,12 +56,18 @@ export default {
       ],
     };
   },
+  methods: {
+    addToDo(toDoLabel) {
+      this.ToDoItems.push({id:uniqueId('todo-'), label: toDoLabel, done: false})
+      
+    }
+  }
 };
 </script>
 
 <!-- 3. style정보를 작성하는 파트 -->
-<!-- css를 포함함 -->
-<!-- <style lang="scss"> 라고 작성하면 스타일링 정보에 SCSS 문법을 사용할 수 있음. -->
+<!-- 3.1. css를 포함함 -->
+<!-- 3.2. <style lang="scss"> 라고 작성하면 스타일링 정보에 SCSS 문법을 사용할 수 있음. -->
 <style>
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
