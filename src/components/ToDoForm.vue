@@ -2,7 +2,9 @@
     <!-- [@event] 이벤트 핸들러 속성 -->
     <!-- @event.prevent는 자바스크립트의 event.preventDefault()와 같이 이벤트가 발생했을때, 새로고침을 방지함. -->
     <form @submit.prevent="onSubmit">
-        <label for="new-todo-input">What needs to be done?</label>
+        <h2 class="label-wrapper">
+            <label for="new-todo-input" class="label__lg">What needs to be done?</label>
+        </h2>
         <!-- [v-model] 양식입력요소 또는 구성요소에 양방향 바인딩을 만드는 속성 -->
         <!-- v-model.trim은 입력전후의 공백을 제거하는 속성.-->
         <!-- v-model.lazy는 텍스트 입력값을 동기화할 때 사용. -->
@@ -12,8 +14,9 @@
         name="new-todo"
         autocomplete="off"
         v-model.lazy.trim="label"
+        class="input__lg"
         /> 
-        <button type="submit">Add</button>
+        <button type="submit" class="btn btn__primary btn__lg">Add</button>
     </form>
 </template>
 
